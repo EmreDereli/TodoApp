@@ -6,7 +6,7 @@ export const register = req => {
   return post(url, req);
 };
 
-export const autoLogin = id => {
-  const url = `${ApiUrl}/users/${id}`;
+export const getAllUsers = () => {
+  const url = `${ApiUrl}/users/`;
   return get(url);
 };
