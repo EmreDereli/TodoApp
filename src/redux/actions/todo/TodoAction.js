@@ -1,4 +1,10 @@
-import {SET_TODOS, ADD_TODO, SET_LOADER, DELETE_TODO} from './TodoActionTypes';
+import {
+  SET_TODOS,
+  ADD_TODO,
+  SET_LOADER,
+  DELETE_TODO,
+  UPDATE_TODO,
+} from './TodoActionTypes';
 
 export const setTodos = todos => ({
   type: SET_TODOS,
@@ -17,5 +23,10 @@ export const setLoader = value => ({
 
 export const deleteTodo = todo => ({
   type: DELETE_TODO,
+  payload: todo,
+});
+
+export const updateTodo = todo => ({
+  type: UPDATE_TODO,
   payload: todo,
 });

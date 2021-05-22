@@ -6,27 +6,34 @@ import axios from 'axios';
 import Fonts from '../../styles/Fonts';
 import Colors from '../../styles/Colors';
 import {getFormattedDate} from '../../helpers/DateHelper';
-import {deleteTodoById} from '../../api/todos';
+import {deleteTodoById, updateTodoById} from '../../api/todos';
 import {useDispatch} from 'react-redux';
-import {deleteTodo} from '../../redux/actions/todo/TodoAction';
+import {deleteTodo, updateTodo} from '../../redux/actions/todo/TodoAction';
 
 export default function TodoItem({id, title, description, date, isDone}) {
   const dispatch = useDispatch();
-  const updateTodo = async val => {
-    const res = await axios.put(
-      'https://60a513a5c0c1fd00175f3092.mockapi.io/api/v1/todos/1',
-      {isDone: val},
-    );
+  const textDecorationStyle = {
+    textDecorationLine: isDone ? 'line-through' : 'none',
+  };
+  const update = async val => {
+    const response = await updateTodoById({
+      id,
+      isDone: val,
+    });
+
+    dispatch(updateTodo(response.data));
   };
   return (
     <View style={styles.container}>
       <View style={{flex: 1}}>
-        <Text style={styles.titleStyle}>{title}</Text>
+        <Text style={{...styles.titleStyle, ...textDecorationStyle}}>
+          {title}
+        </Text>
         <Text style={styles.descriptionStyle}>{description}</Text>
         <Text style={styles.dateStyle}>{getFormattedDate(date)}</Text>
       </View>
       <View style={{justifyContent: 'space-around', alignItems: 'center'}}>
-        <Checkbox onChanged={val => updateTodo(val)} value={isDone} />
+        <Checkbox onChanged={val => update(val)} value={isDone} />
         <TouchableOpacity
           onPress={async () => {
             const response = await deleteTodoById(id);

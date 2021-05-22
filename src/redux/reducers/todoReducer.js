@@ -3,6 +3,7 @@ import {
   SET_TODOS,
   DELETE_TODO,
   SET_LOADER,
+  UPDATE_TODO,
 } from '../actions/todo/TodoActionTypes';
 
 const initialState = {
@@ -32,6 +33,14 @@ function todoReducer(state = initialState, action) {
       return {
         ...state,
         todos: state.todos.filter(todo => todo.id !== action.payload.id),
+      };
+    case UPDATE_TODO:
+      return {
+        ...state,
+        todos: [
+          ...state.todos.filter(todo => todo.id !== action.payload.id),
+          action.payload,
+        ],
       };
     default:
       return state;
