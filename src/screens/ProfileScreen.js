@@ -3,10 +3,20 @@ import {StyleSheet, Text, View} from 'react-native';
 import Button from '../components/common/Button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {CommonActions} from '@react-navigation/native';
+import Input from '../components/common/Input';
+import {useSelector} from 'react-redux';
+import Layout from '../components/common/Layout';
 
 export default function ProfileScreen({navigation}) {
+  const user = useSelector(state => state.userReducer.user);
   return (
-    <View>
+    <Layout style={{backgroundColor: 'white', justifyContent: 'space-between'}}>
+      <View>
+        <Input editable={false} value={user.name} />
+        <Input editable={false} value={user.email} />
+        <Input secureTextEntry editable={false} value={user.password} />
+      </View>
+
       <Button
         title="Logout"
         onPress={async () => {
@@ -20,7 +30,7 @@ export default function ProfileScreen({navigation}) {
           );
         }}
       />
-    </View>
+    </Layout>
   );
 }
 

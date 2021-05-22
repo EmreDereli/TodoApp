@@ -9,6 +9,7 @@ import {register} from '../api/users';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {setUser} from '../redux/actions/user/UserActions';
 
 export default function RegisterScreen() {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ export default function RegisterScreen() {
     });
     if (response.status === 201) {
       await AsyncStorage.setItem('user_id', response.data.id);
+      dispatch(setUser(response.data));
       navigation.replace('TodosScreen');
     }
   };

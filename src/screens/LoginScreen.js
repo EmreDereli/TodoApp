@@ -9,8 +9,11 @@ import {useNavigation} from '@react-navigation/native';
 
 import {getAllUsers} from '../api/users';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useDispatch} from 'react-redux';
+import {setUser} from '../redux/actions/user/UserActions';
 
 export default function LoginScreen() {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const onSubmit = async ({email, password}) => {
     const response = await getAllUsers();
@@ -19,7 +22,7 @@ export default function LoginScreen() {
     );
     if (checkUser) {
       await AsyncStorage.setItem('user_id', checkUser.id);
-
+      dispatch(setUser(checkUser));
       navigation.replace('TodosScreen');
     }
   };
