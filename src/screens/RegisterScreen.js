@@ -57,6 +57,7 @@ export default function RegisterScreen() {
               onChangeText={handleChange('email')}
             />
             <Input
+              secureTextEntry
               placeholder={'Password'}
               onChangeText={handleChange('password')}
             />

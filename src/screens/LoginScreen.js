@@ -51,6 +51,7 @@ export default function LoginScreen() {
               onChangeText={handleChange('email')}
             />
             <Input
+              secureTextEntry
               placeholder={'Password'}
               onChangeText={handleChange('password')}
             />
