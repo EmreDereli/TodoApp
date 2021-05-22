@@ -5,8 +5,25 @@ import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import Fonts from '../styles/Fonts';
 import {Formik} from 'formik';
+import {register} from '../api/users';
+import {useDispatch} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function RegisterScreen() {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const onSubmit = async ({name, email, password}) => {
+    const response = await register({
+      name,
+      email,
+      password,
+    });
+    if (response.status === 201) {
+      await AsyncStorage.setItem('user_id', response.data.id);
+      navigation.replace('TodosScreen');
+    }
+  };
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
       <View style={styles.titleWrapper}>
@@ -18,7 +35,7 @@ export default function RegisterScreen() {
 
       <Formik
         initialValues={{name: '', email: '', password: ''}}
-        onSubmit={values => console.log(values)}>
+        onSubmit={values => onSubmit(values)}>
         {({
           handleChange,
           handleBlur,

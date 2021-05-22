@@ -13,6 +13,7 @@ import {getTodos} from '../api/todos';
 import AddTodoModal from '../components/todos/AddTodoModal';
 import Fonts from '../styles/Fonts';
 import EmptyListWarning from '../components/todos/EmptyListWarning';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function TodosScreen({navigation}) {
   const dispatch = useDispatch();
@@ -21,8 +22,8 @@ export default function TodosScreen({navigation}) {
   const getAllTodos = async () => {
     dispatch(setLoader(true));
     const res = await getTodos();
-    console.log({res});
-    dispatch(setTodos(res.data));
+    const userId = await AsyncStorage.getItem('user_id');
+    dispatch(setTodos(res.data.filter(todo => todo.userId === userId)));
     dispatch(setLoader(false));
   };
 

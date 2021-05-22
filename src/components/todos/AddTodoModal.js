@@ -12,11 +12,13 @@ import {addNewTodo} from '../../api/todos';
 import Todo from '../../models/Todo';
 import {useDispatch} from 'react-redux';
 import {addTodo, doneSetTodos} from '../../redux/actions/todo/TodoAction';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function AddTodoModal({isVisible, onClose}) {
   const dispatch = useDispatch();
   const onSubmit = async ({title, description}) => {
-    const todo = new Todo(title, description, new Date());
+    const userId = await AsyncStorage.getItem('user_id');
+    const todo = new Todo(title, description, new Date(), userId);
     const response = await addNewTodo(todo);
     dispatch(addTodo(response.data));
     onClose();
