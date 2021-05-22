@@ -15,6 +15,12 @@ import {setUser} from '../redux/actions/user/UserActions';
 export default function LoginScreen() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  /**
+   * @function
+   * Login user and set user data
+   * @param {string} email- User email address
+   * @param {string} password- User password
+   * */
   const onSubmit = async ({email, password}) => {
     const response = await getAllUsers();
     const checkUser = response.data.find(

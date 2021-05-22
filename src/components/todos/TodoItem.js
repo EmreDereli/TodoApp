@@ -10,6 +10,22 @@ import {deleteTodoById, updateTodoById} from '../../api/todos';
 import {useDispatch} from 'react-redux';
 import {deleteTodo, updateTodo} from '../../redux/actions/todo/TodoAction';
 
+/**
+ * Component for showing details of the task.
+ *
+ * @component
+ * @example
+ * const id = '1'
+ * const title = 'Go Shopping'
+ * const decription = 'Buy milk'
+ * const date = '2021-05-22T15:09:35.521Z'
+ * const isDone = true
+ *
+ * return (
+ *   <TodoItem id={id} title={title} description={description} date={date} isDone={isDone}>
+ * )
+ */
+
 export default function TodoItem({id, title, description, date, isDone}) {
   const dispatch = useDispatch();
   const textDecorationStyle = {
